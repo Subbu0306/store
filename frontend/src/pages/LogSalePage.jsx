@@ -242,7 +242,7 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`${import.meta.env.VITE_API_URL}/sale`, saleData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/sales`, saleData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -67,7 +67,7 @@ console.log(products)
         const today = moment().startOf('day').toISOString();
         
         const [productsRes, salesRes] = await Promise.all([
-         axios.get(`${import.meta.env.VITE_API_URL}/products`, { 
+          axios.get(`${import.meta.env.VITE_API_URL}/products` }/products, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(`${API_BASE_URL}/sales?startDate=${today}`, {
@@ -242,7 +242,7 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`${import.meta.env.VITE_API_URL}/products`, saleData, {
+      await axios.post('${import.meta.env.VITE_API_URL}/products', saleData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

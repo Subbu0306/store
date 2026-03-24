@@ -16,7 +16,7 @@ const SalesHistoryPage = () => {
   const fetchSales = async () => {
     try {
       const token = localStorage.getItem("token");
-      let url = '${import.meta.env.VITE_API_URL}http://localhost:5001/sales';
+      let url = `${import.meta.env.VITE_API_URL}/sales`;;
 
       const queryParams = [];
       if (filters.productName) queryParams.push(`productName=${filters.productName}`);

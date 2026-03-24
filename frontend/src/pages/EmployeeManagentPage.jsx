@@ -15,7 +15,7 @@ const EmployeeManagementPage = () => {
   const fetchEmployees = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get('${import.meta.env.VITE_API_URL}/employees', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/employees`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployees(res.data);
@@ -34,7 +34,7 @@ const EmployeeManagementPage = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5001/employees",
+        `${import.meta.env.VITE_API_URL}/employees`,
         newEmployee,
         { headers: { Authorization: `Bearer ${token}` } }
       );

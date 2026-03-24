@@ -17,7 +17,7 @@ const ProductManagementPage = () => {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get('${import.meta.env.VITE_API_URL}/products', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/products`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -35,7 +35,7 @@ const ProductManagementPage = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post('${import.meta.env.VITE_API_URL}/products', newProduct, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/products`, newProduct, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchProducts();

@@ -15,7 +15,7 @@ const EmployeeManagementPage = () => {
   const fetchEmployees = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5001/employees", {
+      const res = await axios.get('${import.meta.env.VITE_API_URL}/employees', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployees(res.data);
@@ -48,7 +48,7 @@ const EmployeeManagementPage = () => {
   const handleDeleteEmployee = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5001/employees/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/employees/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchEmployees(); // Refresh the employee list

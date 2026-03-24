@@ -18,7 +18,7 @@ const LogSalePage = () => {
     customerEmail: "",
     paymentType: "",
     discountApplied: 0,
-    discountType: "percentage" // percentage or fixed
+    discountType: "percentage"
   });
   const [showCashInput, setShowCashInput] = useState(false);
   const [cashAmount, setCashAmount] = useState("");
@@ -31,7 +31,7 @@ const LogSalePage = () => {
   });
   const [successMessage, setSuccessMessage] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTimeframe, setSelectedTimeframe] = useState("daily"); // daily, weekly, monthly
+  const [selectedTimeframe, setSelectedTimeframe] = useState("daily");
 
   // Filter products based on search term
   const filteredProducts = products.filter(product =>
@@ -67,6 +67,23 @@ const LogSalePage = () => {
     const subtotal = calculateSubtotal();
     const discountAmount = calculateDiscountAmount();
     return roundToTwo(subtotal - discountAmount);
+  };
+
+  // Apply 10% discount
+  const applyTenPercentDiscount = () => {
+    setSaleData(prev => ({
+      ...prev,
+      discountApplied: 10,
+      discountType: "percentage"
+    }));
+  };
+
+  // Remove discount
+  const removeDiscount = () => {
+    setSaleData(prev => ({
+      ...prev,
+      discountApplied: 0
+    }));
   };
 
   // Calculate sales metrics with discount consideration
@@ -253,15 +270,6 @@ const LogSalePage = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSaleData({ ...saleData, [name]: value });
-  };
-
-  const handleDiscountChange = (e) => {
-    const value = parseFloat(e.target.value) || 0;
-    setSaleData({ ...saleData, discountApplied: value });
-  };
-
-  const handleDiscountTypeChange = (type) => {
-    setSaleData({ ...saleData, discountType: type, discountApplied: 0 });
   };
 
   const addProductToSale = (product) => {
@@ -488,32 +496,43 @@ const LogSalePage = () => {
               {saleData.items.length === 0 ? <p className="text-gray-400 text-center py-8">No products added</p> : <div className="space-y-3">{saleData.items.map((item, index) => renderCartItem(item, index))}</div>}
             </div>
             
-            {/* Discount Section */}
+            {/* Discount Section with Simple 10% Button */}
             <div className="border-t border-gray-600 pt-4 mb-4">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-300">Subtotal</span>
                 <span className="text-white">${subtotal.toFixed(2)}</span>
               </div>
               
+              {/* 10% Discount Button */}
               <div className="mb-4">
-                <div className="flex gap-2 mb-2">
-                  <button onClick={() => handleDiscountTypeChange("percentage")} className={`px-3 py-1 rounded text-sm ${saleData.discountType === "percentage" ? "bg-indigo-600 text-white" : "bg-gray-700 text-gray-300"}`}>% Percentage</button>
-                  <button onClick={() => handleDiscountTypeChange("fixed")} className={`px-3 py-1 rounded text-sm ${saleData.discountType === "fixed" ? "bg-indigo-600 text-white" : "bg-gray-700 text-gray-300"}`}>$ Fixed</button>
-                </div>
-                <div className="flex gap-2">
-                  <input type="number" value={saleData.discountApplied} onChange={handleDiscountChange} className="w-32 p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder={saleData.discountType === "percentage" ? "Discount %" : "Discount $" } step="0.01" />
-                  {saleData.discountApplied > 0 && (
-                    <button onClick={() => setSaleData({ ...saleData, discountApplied: 0 })} className="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700">Clear</button>
-                  )}
-                </div>
-                {saleData.discountApplied > 0 && (
-                  <p className="text-green-400 text-sm mt-1">Discount: -${discountAmount.toFixed(2)}</p>
+                {saleData.discountApplied === 0 ? (
+                  <button
+                    onClick={applyTenPercentDiscount}
+                    className="w-full py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center justify-center gap-2 font-semibold"
+                  >
+                    <span>🎯</span> Apply 10% Discount
+                  </button>
+                ) : (
+                  <div className="bg-green-900/30 p-3 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="text-green-400 font-semibold">10% Discount Applied!</span>
+                        <p className="text-sm text-gray-300 mt-1">Discount: -${discountAmount.toFixed(2)}</p>
+                      </div>
+                      <button
+                        onClick={removeDiscount}
+                        className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
               
-              <div className="flex justify-between text-lg font-bold">
+              <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-600">
                 <span className="text-white">Total</span>
-                <span className="text-green-400">${total.toFixed(2)}</span>
+                <span className="text-green-400 text-xl">${total.toFixed(2)}</span>
               </div>
             </div>
             

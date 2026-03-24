@@ -16,7 +16,7 @@ const SalesHistoryPage = () => {
   const fetchSales = async () => {
     try {
       const token = localStorage.getItem("token");
-      let url = "http://localhost:5001/sales";
+      let url = '${import.meta.env.VITE_API_URL}http://localhost:5001/sales';
 
       const queryParams = [];
       if (filters.productName) queryParams.push(`productName=${filters.productName}`);
@@ -51,7 +51,7 @@ const SalesHistoryPage = () => {
       const token = localStorage.getItem("token");
   
       // 1️⃣ Fetch all products from the store to define column headers
-      const productRes = await axios.get("${process.env.REACT_APP_API_URL}/products", {
+      const productRes = await axios.get('${import.meta.env.VITE_API_URL}/products', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const allProducts = productRes.data; // Assume it returns a list of all products in store

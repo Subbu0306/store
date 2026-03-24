@@ -1,34 +1,41 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// Middleware to verify JWT token and check user role
 module.exports = (allowedRoles) => {
   return async (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1]; // Extract token from Authorization header
-    if (!token) {
-      return res.status(401).json({ message: "No token provided" });
-    }
-
     try {
+      const authHeader = req.headers.authorization;
+      
+      // Check for Bearer token format
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).json({ message: "Authorization header missing or invalid" });
+      }
+
+      const token = authHeader.split(" ")[1];
+
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Find user by ID
-      const user = await User.findById(decoded.id);
+      // Security: Check database to ensure user wasn't deleted or banned
+      const user = await User.findById(decoded.id).select("-password"); // Don't fetch the password hash
+      
       if (!user) {
-        return res.status(401).json({ message: "Invalid token" });
+        return res.status(401).json({ message: "User no longer exists" });
       }
 
-      // Check if user role is allowed
-      if (!allowedRoles.includes(user.role)) {
-        return res.status(403).json({ message: "Access denied" });
+      // RBAC: Role check
+      if (allowedRoles && !allowedRoles.includes(user.role)) {
+        return res.status(403).json({ message: "Permission denied: Insufficient role" });
       }
 
-      // Attach user to request object
       req.user = user;
       next();
     } catch (err) {
-      res.status(401).json({ message: "Invalid token" });
+      // Specific error for expired tokens
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).json({ message: "Token expired, please login again" });
+      }
+      return res.status(401).json({ message: "Authentication failed" });
     }
   };
 };

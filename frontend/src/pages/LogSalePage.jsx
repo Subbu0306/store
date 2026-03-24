@@ -67,7 +67,7 @@ console.log(products)
         const today = moment().startOf('day').toISOString();
         
         const [productsRes, salesRes] = await Promise.all([
-          axios.get(`${API_BASE_URL}/products` }/products, {
+          axios.get(`${import.meta.env.VITE_API_URL}/products` }/products, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(`${API_BASE_URL}/sales?startDate=${today}`, {
@@ -114,7 +114,7 @@ useEffect(() => {
       
       // 🚨 IMPLEMENT THIS NEW BACKEND ENDPOINT
       // This API call hits your server to check if the ID exists in your customer/sales database.
-      const response = await axios.get(`${API_BASE_URL}/sales/check-college-id?id=${encodeURIComponent(collegeId)}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/sales/check-college-id?id=${encodeURIComponent(collegeId)}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -242,7 +242,7 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("${API_BASE_URL}/products", saleData, {
+      await axios.post('${import.meta.env.VITE_API_URL}/products', saleData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -261,7 +261,7 @@ useEffect(() => {
       setChangeToReturn(0);
       
       const today = moment().startOf('day').toISOString();
-      const res = await axios.get(`http://localhost:5001/sales?startDate=${today}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/sales?startDate=${today}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTodaySales(res.data);

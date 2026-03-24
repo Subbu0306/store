@@ -67,7 +67,7 @@ console.log(products)
         const today = moment().startOf('day').toISOString();
         
         const [productsRes, salesRes] = await Promise.all([
-          axios.get(${API_BASE_URL}/products, {
+          axios.get(`${API_BASE_URL}/products`}/products, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(`${API_BASE_URL}/sales?startDate=${today}`, {

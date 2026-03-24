@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import moment from 'moment';
 // Replace the URL below with your actual Render.com URL later
-const API_BASE_URL = "https://your-backend-name.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 const LogSalePage = () => {
   const [products, setProducts] = useState([]);
   const [todaySales, setTodaySales] = useState([]);

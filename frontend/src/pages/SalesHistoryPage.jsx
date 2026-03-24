@@ -51,7 +51,7 @@ const SalesHistoryPage = () => {
       const token = localStorage.getItem("token");
   
       // 1️⃣ Fetch all products from the store to define column headers
-      const productRes = await axios.get("http://localhost:5001/products", {
+      const productRes = await axios.get("${process.env.REACT_APP_API_URL}/products", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const allProducts = productRes.data; // Assume it returns a list of all products in store

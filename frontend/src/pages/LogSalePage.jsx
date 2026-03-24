@@ -3,7 +3,8 @@ import axios from "axios";
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import moment from 'moment';
-
+// Replace the URL below with your actual Render.com URL later
+const API_BASE_URL = "https://your-backend-name.onrender.com";
 const LogSalePage = () => {
   const [products, setProducts] = useState([]);
   const [todaySales, setTodaySales] = useState([]);
@@ -66,10 +67,10 @@ console.log(products)
         const today = moment().startOf('day').toISOString();
         
         const [productsRes, salesRes] = await Promise.all([
-          axios.get("http://localhost:5001/products", {
+          axios.get(${API_BASE_URL}/products, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`http://localhost:5001/sales?startDate=${today}`, {
+          axios.get(`${API_BASE_URL}/sales?startDate=${today}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
         ]);
@@ -113,7 +114,7 @@ useEffect(() => {
       
       // 🚨 IMPLEMENT THIS NEW BACKEND ENDPOINT
       // This API call hits your server to check if the ID exists in your customer/sales database.
-      const response = await axios.get(`http://localhost:5001/sales/check-college-id?id=${encodeURIComponent(collegeId)}`, {
+      const response = await axios.get(`${API_BASE_URL}/sales/check-college-id?id=${encodeURIComponent(collegeId)}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -241,7 +242,7 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5001/sales", saleData, {
+      await axios.post("${API_BASE_URL}/products", saleData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

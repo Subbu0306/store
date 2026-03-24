@@ -15,7 +15,7 @@ const AdminDashboard = () => {
       const token = localStorage.getItem("token");
 
       // Fetch total sales
-      const salesResponse = await axios.get('${import.meta.env.VITE_API_URL}', {
+      const salesResponse = await axios.get('${import.meta.env.VITE_API_URL}/sales', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
       setTotalAmount(totalAmountToday);
 
       // Fetch stock levels
-      const productsResponse = await axios.get('${import.meta.env.VITE_API_URL}', {
+      const productsResponse = await axios.get('${import.meta.env.VITE_API_URL}/products', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

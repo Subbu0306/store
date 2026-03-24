@@ -7,14 +7,17 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: ["https://your-app-name.vercel.app", "http://localhost:3000"], // Allow both production and local dev
-  credentials: true
+  // Add BOTH your main Vercel URL and the specific "preview" URL from your logs
+  origin: [
+    "https://store-zrm5.vercel.app", 
+    "https://store-zrm5-lpneey3au-subbu0306s-projects.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
-app.use(express.json());
 
-
-
-
+app.use("/auth", require("./routes/auth"));
 
 // Connect to MongoDB
 // Connect to MongoDB

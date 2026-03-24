@@ -1,0 +1,8 @@
+{
+    "workbench.editor.autoLockGroups": {
+        "notebookOutputEditor": true,
+        "jupyter-notebook": true
+    },
+    "workbench.view.alwaysShowHeaderActions": false,
+    "diffEditor.experimental.useTrueInlineView": false
+}

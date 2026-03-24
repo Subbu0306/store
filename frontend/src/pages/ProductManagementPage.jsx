@@ -17,7 +17,7 @@ const ProductManagementPage = () => {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5001/products", {
+      const res = await axios.get('${import.meta.env.VITE_API_URL}/products', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -35,7 +35,7 @@ const ProductManagementPage = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5001/products", newProduct, {
+      await axios.post('${import.meta.env.VITE_API_URL}/products', newProduct, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchProducts();
@@ -48,7 +48,7 @@ const ProductManagementPage = () => {
   const handleDeleteProduct = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5001/products/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchProducts();
@@ -62,7 +62,7 @@ const ProductManagementPage = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5001/products/${editingProduct._id}`,
+        `${import.meta.env.VITE_API_URL}/products/${editingProduct._id}`,
         {
           name: editingProduct.name,
           price: editingProduct.price,

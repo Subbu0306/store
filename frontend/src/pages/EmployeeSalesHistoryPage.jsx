@@ -24,7 +24,7 @@ const EmployeeSalesHistoryPage = () => {
       }
 
       // Fetch sales history for the employee
-      const res = await axios.get(`http://localhost:5001/sales?employeeId=${userId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/sales?employeeId=${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

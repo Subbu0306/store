@@ -48,7 +48,7 @@ const ProductManagementPage = () => {
   const handleDeleteProduct = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${import.meta.env.VITE_API_URL}products/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchProducts();
